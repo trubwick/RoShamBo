@@ -1,0 +1,90 @@
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+div {border: dashed black 1px} /* DEV TOOLS */
+
+.game-space {
+    position: fixed;
+    min-height: 100%;
+    width: 100%;
+    min-width: 480px;
+    display: inline-block;
+    top: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.arena {
+    min-width: 100%;
+    min-height: 50%;
+    display: flex;
+    justify-content: stretch;
+    flex-basis: 1 1 initial;
+    box-sizing: border-box;
+}
+
+.score {
+    min-width: 25%;
+    min-height: 100%;
+    display: flex;
+    justify-content: stretch;
+    flex-basis: 1 1 initial;
+    box-sizing: border-box;
+}
+
+.hands {
+    min-width: 25%;
+    min-height: 100%;
+    display: flex;
+    justify-content: stretch;
+    flex-basis: 1 1 initial;
+    box-sizing: border-box;
+}
+
+.title {
+    min-width: 100%;
+    min-height: 10%;
+    display: flex;
+    flex-basis: 1 1 initial;
+    box-sizing: border-box;
+}
+
+.controller {
+    min-width: 100%;
+    min-height: 40%;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+.options {
+    flex: 1 1 auto;
+}
+
+
+/* ANIMATION STATION */
+
+img.animated {
+    transition: all ease-in 0.01s;
+    animation: RoShamBo 3s;
+    animation-iteration-count: 1;
+}
+
+#lefthand {
+    transform: rotate(90deg);
+    transform-origin: bottom;
+}
+
+@keyframes RoShamBo {
+    22% { transform: translate(5px, 0) rotate(-10deg); }
+    34% { transform: translate(-10px, 0) rotate(20deg) scale(1.1); }
+    56% { transform: translate(15px, 0) rotate(-20deg); }
+    68% { transform: translate(-30px, 0) rotate(20deg) scale(1.2); }
+    90% { transform: translate(60px, 0) rotate(-10deg); }
+    100% { transform: translate(-30px, 0) rotate(10deg) scale(1.3); }
+}

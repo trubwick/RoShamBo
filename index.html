@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>RoShamBo</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="game-space">
+            <div class="arena">
+                <div class="score">SCORE 1</div>
+                <div class="hands">HANDS 1<img class="hands" id="lefthand" src="./images/fist.svg"></div>
+                <div class="hands">HANDS 2<img class="hands" id="lefthand"></div>
+                <div class="score">SCORE 2</div>
+            </div>
+            <div class="logo">
+                RoShamBo 
+                <button onclick="activateButtons()">Start</button>
+                <button onclick="resetGame()">Reset</button>
+            </div>
+            
+            <!-- PLAYER 1 -->
+            <div class="controller" id="controller-player1">
+                <div class="options" id="rock">Rock</div>
+                <div class="options" id="paper">Paper</div>
+                <div class="options" id="scissors">Scissors</div>
+            </div>
+            
+        </div>
+        <script src="main.js" async defer></script>
+    </body>
+</html>
