@@ -66,6 +66,9 @@ div {border: dashed black 1px} /* DEV TOOLS */
     flex: 1 1 auto;
 }
 
+.options:hover { background-color: #CC0099; }
+.options:active { background-color: #336600; }
+
 
 /* ANIMATION STATION */
 
