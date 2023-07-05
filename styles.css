@@ -71,8 +71,19 @@ div {border: dashed black 1px} /* DEV TOOLS */
 
 img.animated {
     transition: all ease-in 0.01s;
-    animation: RoShamBo 3s;
+    animation: RoShamBoLeft 3s;
     animation-iteration-count: 1;
+}
+
+img.winner {
+    transition: all ease-in-out 1s 3s; /* last digit is delay - needs updating to match main animation */
+    animation: winner;
+    animation-iteration-count: infinite;
+}
+
+img.loser {
+    transition: all ease-in-out 5s 3s; /* last digit is delay - needs updating to match main animation */
+    transform: scale(0.50) translate(0px, -5px);
 }
 
 #lefthand {
@@ -88,3 +99,9 @@ img.animated {
     90% { transform: translate(60px, 0) rotate(-10deg); }
     100% { transform: translate(-30px, 0) rotate(10deg) scale(1.5); }
 }
+
+@keyframes winner {
+    0%, 100%{ transform: rotate(-6deg);}
+    50%{ transform: rotate(6deg); }
+}
+
