@@ -22,7 +22,7 @@ var game = {
 
 const rivalChoices = []; // Used for making AI more humanlike
 
-// This is so inelegant, but trying to group addEventListeners was causing all manner of errors
+// This is so inelegant, but trying to loop addEventListeners was causing all manner of errors
 const ROCKBUTTON = document.getElementById("rock");
 const PAPERBUTTON = document.getElementById("paper");
 const SCISSORSBUTTON = document.getElementById("scissors");
@@ -53,14 +53,23 @@ function deactivateButtons() {
 const LEFTHAND = document.getElementById("lefthand");
 const RIGHTHAND = document.getElementById("righthand");
 
+// Animations handled by adding classes that contain the animation details in css
 function animateHands() {
     LEFTHAND.classList.add("animated");
     RIGHTHAND.classList.add("animated");
+    if (game.result === "Winner") {
+        LEFTHAND.classList.add("winner");
+        RIGHTHAND.classList.add("loser");
+    } else if (game.result === "Loser") {
+        LEFTHAND.classList.add("loser");
+        RIGHTHAND.classList.add("winner");
+    } else { }
+    // Can I create a time-delayed call of a function here which then updates the score to avoid giving it away?
 }
 
 function unAnimateHands () {
-    LEFTHAND.classList.remove("animated");
-    RIGHTHAND.classList.remove("animated");
+    LEFTHAND.classList.remove("animated", "winner", "loser");
+    RIGHTHAND.classList.remove("animated", "winner", "loser");
 }
 
 function startGame(x) {
@@ -79,10 +88,10 @@ function startGame(x) {
     if (game.input === game.rivalInput) {
         game.result = "Draw";
     } else if (options.indexOf(game.input) === beats.indexOf(game.rivalInput)) {
-        game.result = "Win";
+        game.result = "Winner";
         game.score += 1
     } else {
-        game.result = "Lose";
+        game.result = "Loser";
         game.score = 0;
     }
 
@@ -98,12 +107,19 @@ function startGame(x) {
     console.log(rivalChoices);
 }
 
-
+// Weights the options so it isn't purely random, based on human behaviour
+function weightRand(spec) {
+    var i, sum=0, r=Math.random();
+    for (i in spec) {
+        sum += spec[i];
+        if (r <= sum) return i;
+    }
+}
 // Function for randomly choosing the rival's input
-// Could try and make this more human-like with bias ??? For later
 function rivalChoose() {
-    game.rivalInput = options[Math.floor(Math.random() * options.length)];
-    rivalChoices.push(game.rivalInput);
+    //game.rivalInput = options[Math.floor(Math.random() * options.length)];
+    game.rivalInput = options[weightedRand({0:0.35, 1:0.3, 2:0.35})]; // This weights the options according to https://www.psychologytoday.com/gb/blog/the-blame-game/201504/the-surprising-psychology-rock-paper-scissors
+    rivalChoices.push(game.rivalInput); // Tracks computer choices in case we want to alter behaviour based on sequencing
 }
 
 function resetGame() {
@@ -111,6 +127,7 @@ function resetGame() {
     unAnimateHands();
     game.input = "";
     game.rivalInput = "";
+    game.result = "";
 }
 
 
