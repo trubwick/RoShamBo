@@ -12,20 +12,39 @@ const beats = [
     "paper"
 ]
 
+
 var game = {
     score: 0,
     highScore: 0,
+    rivalScore: 0,
     input: "",
     rivalInput: "",
-    result: ""
+    result: "",
+    options: [
+        "rock",
+        "paper",
+        "scissors"
+    ],
+    imagesLeft: [
+        "rock.svg",
+        "paper.svg",
+        "scissors.svg"
+    ],
+    imagesRight: [
+        "rockRight.svg",
+        "paperRight.svg",
+        "scissorsRight.svg"
+    ]
 }
 
 const rivalChoices = []; // Used for making AI more humanlike
+const timeOut = 2000; // Used to control delay to allow animation to play out in ms
 
 // This is so inelegant, but trying to loop addEventListeners was causing all manner of errors
 const ROCKBUTTON = document.getElementById("rock");
 const PAPERBUTTON = document.getElementById("paper");
 const SCISSORSBUTTON = document.getElementById("scissors");
+const STARTBUTTON = document.getElementById("button"); // Note that this is the whole button script, not the button itself
 
 function chooseRock() {startGame("rock")};
 function choosePaper() {startGame("paper")};
@@ -38,6 +57,7 @@ function activateButtons() {
     ROCKBUTTON.style.backgroundColor = "white";
     PAPERBUTTON.style.backgroundColor = "white";
     SCISSORSBUTTON.style.backgroundColor = "white";
+    STARTBUTTON.innerHTML = '<button onclick="resetGame()" id="start-button">Next Round</button>'
 }
 
 function deactivateButtons() {
@@ -47,6 +67,7 @@ function deactivateButtons() {
     ROCKBUTTON.style.backgroundColor = "grey";
     PAPERBUTTON.style.backgroundColor = "grey";
     SCISSORSBUTTON.style.backgroundColor = "grey";
+    document.getElementById("start-button").disabled = true;
 }
 
 // Gets items for animation - adds a class to the hands which holds the animation, which can then be removed on reset
@@ -59,7 +80,7 @@ function animateHands() {
     RIGHTHAND.classList.add("animated");
     if (game.result === "Winner") {
         LEFTHAND.classList.add("winner");
-        RIGHTHAND.classList.add("loser");
+        RIGHTHAND.classList.add("oser");
     } else if (game.result === "Loser") {
         LEFTHAND.classList.add("loser");
         RIGHTHAND.classList.add("winner");
@@ -71,6 +92,26 @@ function unAnimateHands () {
     LEFTHAND.classList.remove("animated", "winner", "loser");
     RIGHTHAND.classList.remove("animated", "winner", "loser");
 }
+
+// Updates score and the result message
+function updateScore() {
+    // Update score
+    document.getElementById("score1").innerHTML = game.score;
+    document.getElementById("score2").innerHTML = game.rivalScore;
+    if (game.score > game.highScore) game.highScore = game.score;
+    // Update result message info
+    document.getElementById("result-message").innerHTML = game.result;
+    document.getElementById("result-message").style.visibility = "visible";
+    document.getElementById("result-message").style.maxWidth = "100%";
+   // Update arena images
+    var leftResultImg = "images/" + game.imagesLeft[options.indexOf(game.input)];
+    var rightResultImg = "images/" + game.imagesRight[options.indexOf(game.rivalInput)];
+    document.getElementById("lefthand").src = leftResultImg;
+    document.getElementById("righthand").src = rightResultImg;
+    // Open up 'Next Round' Button
+    document.getElementById("start-button").disabled = false;
+}
+
 
 function startGame(x) {
     // Stops player changing their answer
@@ -92,11 +133,14 @@ function startGame(x) {
         game.score += 1
     } else {
         game.result = "Loser";
-        game.score = 0;
+        game.rivalScore += 1;
     }
 
+
+    //Delays the score update and winner message until animation has run
+    setTimeout(updateScore, timeOut);
+
     // Updates high score
-    if (game.score > game.highScore) game.highScore = game.score;
 
     // DEV TOOLS
     console.log(game.input);
@@ -107,18 +151,19 @@ function startGame(x) {
     console.log(rivalChoices);
 }
 
-// Weights the options so it isn't purely random, based on human behaviour
-function weightRand(spec) {
+// Weights the options so it isn't purely random, based on human behaviour - BROKEN
+/* function weightedRand(spec) {
     var i, sum=0, r=Math.random();
     for (i in spec) {
         sum += spec[i];
         if (r <= sum) return i;
     }
-}
+}*/
+
 // Function for randomly choosing the rival's input
 function rivalChoose() {
-    //game.rivalInput = options[Math.floor(Math.random() * options.length)];
-    game.rivalInput = options[weightedRand({0:0.35, 1:0.3, 2:0.35})]; // This weights the options according to https://www.psychologytoday.com/gb/blog/the-blame-game/201504/the-surprising-psychology-rock-paper-scissors
+    game.rivalInput = options[Math.floor(Math.random() * options.length)];
+    //game.rivalInput = options[Math.floor(Math.random() * options.length)]; // This weights the options according to https://www.psychologytoday.com/gb/blog/the-blame-game/201504/the-surprising-psychology-rock-paper-scissors
     rivalChoices.push(game.rivalInput); // Tracks computer choices in case we want to alter behaviour based on sequencing
 }
 
@@ -128,6 +173,10 @@ function resetGame() {
     game.input = "";
     game.rivalInput = "";
     game.result = "";
+    document.getElementById("lefthand").src = "images/fist.svg";
+    document.getElementById("righthand").src = "images/fistRight.svg";
+    document.getElementById("result-message").style.visibility = "hidden"; // Must have some content otherwise div not shown and messes with layout
+
 }
 
 
