@@ -34,6 +34,11 @@ var game = {
         "rockRight.svg",
         "paperRight.svg",
         "scissorsRight.svg"
+    ],
+    resultOptions: [
+        "Draw",
+        "Win",
+        "Lose"
     ]
 }
 
@@ -67,7 +72,6 @@ function deactivateButtons() {
     ROCKBUTTON.style.backgroundColor = "grey";
     PAPERBUTTON.style.backgroundColor = "grey";
     SCISSORSBUTTON.style.backgroundColor = "grey";
-    document.getElementById("start-button").disabled = true;
 }
 
 // Gets items for animation - adds a class to the hands which holds the animation, which can then be removed on reset
@@ -78,14 +82,6 @@ const RIGHTHAND = document.getElementById("righthand");
 function animateHands() {
     LEFTHAND.classList.add("animated");
     RIGHTHAND.classList.add("animated");
-    if (game.result === "Winner") {
-        LEFTHAND.classList.add("winner");
-        RIGHTHAND.classList.add("oser");
-    } else if (game.result === "Loser") {
-        LEFTHAND.classList.add("loser");
-        RIGHTHAND.classList.add("winner");
-    } else { }
-    // Can I create a time-delayed call of a function here which then updates the score to avoid giving it away?
 }
 
 function unAnimateHands () {
@@ -101,8 +97,7 @@ function updateScore() {
     if (game.score > game.highScore) game.highScore = game.score;
     // Update result message info
     document.getElementById("result-message").innerHTML = game.result;
-    document.getElementById("result-message").style.visibility = "visible";
-    document.getElementById("result-message").style.maxWidth = "100%";
+    
    // Update arena images
     var leftResultImg = "images/" + game.imagesLeft[options.indexOf(game.input)];
     var rightResultImg = "images/" + game.imagesRight[options.indexOf(game.rivalInput)];
@@ -110,6 +105,19 @@ function updateScore() {
     document.getElementById("righthand").src = rightResultImg;
     // Open up 'Next Round' Button
     document.getElementById("start-button").disabled = false;
+    // Reanimate hands
+    LEFTHAND.classList.remove("animated");
+    RIGHTHAND.classList.remove("animated");
+    if (game.result === "Winner") {
+        LEFTHAND.classList.add("winner"); 
+        RIGHTHAND.classList.add("loser");
+    } else if (game.result === "Loser") {
+        LEFTHAND.classList.add("loser"); 
+        RIGHTHAND.classList.add("winner");
+    } else {
+        LEFTHAND.classList.add("loser"); 
+        RIGHTHAND.classList.add("loser");
+    }
 }
 
 
@@ -121,7 +129,7 @@ function startGame(x) {
     game.input = x;
 
     // Starts animation
-    animateHands();
+    
 
     // Runs function for computer to randomly choose
     rivalChoose();
@@ -138,10 +146,10 @@ function startGame(x) {
 
 
     //Delays the score update and winner message until animation has run
+    animateHands();
     setTimeout(updateScore, timeOut);
-
-    // Updates high score
-
+    
+    
     // DEV TOOLS
     console.log(game.input);
     console.log(game.rivalInput);
@@ -168,6 +176,7 @@ function rivalChoose() {
 }
 
 function resetGame() {
+    document.getElementById("start-button").disabled = true;
     activateButtons();
     unAnimateHands();
     game.input = "";
@@ -175,8 +184,4 @@ function resetGame() {
     game.result = "";
     document.getElementById("lefthand").src = "images/fist.svg";
     document.getElementById("righthand").src = "images/fistRight.svg";
-    document.getElementById("result-message").style.visibility = "hidden"; // Must have some content otherwise div not shown and messes with layout
-
 }
-
-

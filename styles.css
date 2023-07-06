@@ -2,7 +2,7 @@
     font-family: 'Bubblegum Sans', cursive;
 }
 
-div {border: dashed black 1px} /* DEV TOOLS */
+/*div {border: dashed black 1px} /* DEV TOOLS */
 
 .game-space {
     position: fixed;
@@ -27,8 +27,7 @@ div {border: dashed black 1px} /* DEV TOOLS */
 }
 
 .result {
-    max-width: 0%;
-    visibility: hidden;
+    max-width: 100%;
     z-index: 1;
     position: relative;
     top: 0%;
@@ -37,6 +36,11 @@ div {border: dashed black 1px} /* DEV TOOLS */
     padding: auto;
     display: flex;
     justify-content: center;
+    text-transform: uppercase;
+}
+
+.result:hover {
+    transform: scale(1.1);
 }
 
 .score {
@@ -51,6 +55,17 @@ div {border: dashed black 1px} /* DEV TOOLS */
     font-size: 4em;
 }
 
+.controller {
+    min-width: 100%;
+    min-height: 30%;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: stretch;
+    margin-top: 20px;
+}
+
 .hands, .options {
     min-width: 30%;
     min-height: 100%;
@@ -60,7 +75,12 @@ div {border: dashed black 1px} /* DEV TOOLS */
     align-items: center;
     flex-basis: 1 1 initial;
     box-sizing: border-box;
+    border-radius: 10px;
+    margin: 0 10px 0 10px;
 }
+
+.options:hover { background-color: #CC0099; }
+.options:active { background-color: #336600; }
 
 .title {
     min-width: 100%;
@@ -81,26 +101,6 @@ div {border: dashed black 1px} /* DEV TOOLS */
     text-align: center;
 }
 
-.controller {
-    min-width: 100%;
-    min-height: 40%;
-    left: 0;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: stretch;
-}
-
-.options {
-    flex: 1 1 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.options:hover { background-color: #CC0099; }
-.options:active { background-color: #336600; }
-
 
 /* ANIMATION STATION */
 
@@ -108,6 +108,11 @@ img {
     width: 250px;
     height: auto;
     flex-basis: 1 1 auto;
+}
+
+.options img {
+    width: 150px;
+    height: auto;
 }
 
 img.animated {
@@ -118,49 +123,39 @@ img.animated {
 img.animated#lefthand { animation: RoShamBoLeft 2s; }
 img.animated#righthand { animation: RoShamBoRight 2s; }
 
-img.winner {
-    transition: all ease-in-out 1s 2s; /* last digit is delay - needs updating to match main animation */
-    animation: winner;
+.winner {
+    transition: all ease-in-out;
+    animation: winnerShake;
+    animation-duration: 1s;
     animation-iteration-count: infinite;
 }
 
-img.loser {
-    transition: all ease-in-out 5s 2s; /* last digit is delay - needs updating to match main animation */
+/*.loser {
+    transition: all ease-in-out 3s; 
     transform: scale(0.50) translate(0px, -5px);
-}
+}*/
 
 
 
 @keyframes RoShamBoLeft {
-    22%, 56%, 90% { transform: translate(10px, 0) rotate(-40deg); }
-    34% { transform: translate(-5px, 0) rotate(10deg) scale(1.1); }
-    68% { transform: translate(-5px, 0) rotate(10deg) scale(1.2); }
-    100% { transform: translate(-5px, 0) rotate(10deg) scale(1.5); }
+    15%, 45%, 75% { transform: translate(10px, 0) rotate(-40deg); }
+    30% { transform: translate(-5px, 0) rotate(10deg) scale(1.1); }
+    60% { transform: translate(-5px, 0) rotate(10deg) scale(1.2); }
+    90% { transform: translate(-5px, 0) rotate(10deg) scale(1.3); }
+    100% { transform: rotate(-90deg) scale(1.5); }
 }
 
 @keyframes RoShamBoRight {
-    22%, 56%, 90% { transform: translate(10px, 0) rotate(40deg); }
-    34% { transform: translate(-5px, 0) rotate(-10deg) scale(1.1); }
-    68% { transform: translate(-5px, 0) rotate(-10deg) scale(1.2); }
-    100% { transform: translate(-5px, 0) rotate(-10deg) scale(1.3); }
+    15%, 45%, 75% { transform: translate(10px, 0) rotate(40deg); }
+    30% { transform: translate(-5px, 0) rotate(-10deg) scale(1.1); }
+    60% { transform: translate(-5px, 0) rotate(-10deg) scale(1.2); }
+    90% { transform: translate(-5px, 0) rotate(-10deg) scale(1.3); }
+    100% { transform: rotate(90deg) scale(1.5); }
 }
 
-@keyframes winner {
-    0%, 100%{ transform: rotate(-6deg) scale(1.5);}
-    50%{ transform: rotate(6deg) scale(1.5); }
+@keyframes winnerShake {
+    0%, 100% { transform: rotate(-6deg) scale(1.3);} 
+    50% { transform: rotate(6deg) scale(1.3); }
 }
 
-@keyframes titleRo {
-    0%, 56% { transform: scale(1.0); }
-    34% { transform: scale(1.1); }
-}
-
-@keyframes titleSham {
-    0%, 90% { transform: scale(1.0); }
-    68% { transform: scale(1.2); }
-}
-
-@keyframes titleBo {
-    0% { transform: scale(1.0); }
-    100% { transform: scale(1.5); }
-}
+/* Loser animation simple transfrom in .loser class */
