@@ -2,12 +2,27 @@
     font-family: 'Bubblegum Sans', cursive;
 }
 
+p {
+    padding: 0;
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size:xx-small;
+}
+
+footer {
+    margin-top: 20px;
+    border-top: solid black 1px;
+    padding-top: 10px;
+    width: 99%;
+
+}
+
 /*div {border: dashed black 1px} /* DEV TOOLS */
 
 .game-space {
     position: fixed;
     min-height: 100%;
-    width: 100%;
+    width: 99%;
     min-width: 480px;
     display: inline-block;
     top: 0;
@@ -39,9 +54,20 @@
     text-transform: uppercase;
 }
 
-.result:hover {
-    transform: scale(1.1);
+
+button {
+    font-size: 32px;
+    color: white;
+    background: linear-gradient(135deg, rgba(34,193,195,1) 55%, rgba(253,187,45,1) 100%);
+    padding: 10px 40px;
+    border: none;
+    border-radius: 10px;
+    transition: all ease-in-out 0.2s;
 }
+
+button:hover:enabled {transform: scale(1.05);}
+button:active:enabled {transform: scale(0.95);}
+button:disabled {background: grey;}
 
 .score {
     min-width: 20%;
@@ -56,14 +82,14 @@
 }
 
 .controller {
-    min-width: 100%;
+    width: 95%;
     min-height: 30%;
     left: 0;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: stretch;
-    margin-top: 20px;
+    justify-content: space-between;
+    margin: 30px auto;
 }
 
 .hands, .options {
@@ -79,8 +105,12 @@
     margin: 0 10px 0 10px;
 }
 
-.options:hover { background-color: #CC0099; }
-.options:active { background-color: #336600; }
+.options:disabled {
+    background: grey;
+}
+
+
+
 
 .title {
     min-width: 100%;

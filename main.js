@@ -59,19 +59,25 @@ function activateButtons() {
     ROCKBUTTON.addEventListener("click", chooseRock);
     PAPERBUTTON.addEventListener("click", choosePaper);
     SCISSORSBUTTON.addEventListener("click", chooseScissors);
-    ROCKBUTTON.style.backgroundColor = "white";
-    PAPERBUTTON.style.backgroundColor = "white";
-    SCISSORSBUTTON.style.backgroundColor = "white";
-    STARTBUTTON.innerHTML = '<button onclick="resetGame()" id="start-button">Next Round</button>'
+    //ROCKBUTTON.style.backgroundColor = "white";
+    //PAPERBUTTON.style.backgroundColor = "white";
+    //SCISSORSBUTTON.style.backgroundColor = "white";
+    ROCKBUTTON.disabled = false;
+    PAPERBUTTON.disabled = false;
+    SCISSORSBUTTON.disabled = false;
+    STARTBUTTON.innerHTML = '<button onclick="resetGame()" id="start-button" disabled>Next Round</button>'
 }
 
 function deactivateButtons() {
-    ROCKBUTTON.removeEventListener("click", chooseRock);
-    PAPERBUTTON.removeEventListener("click", choosePaper);
-    SCISSORSBUTTON.removeEventListener("click", chooseScissors);
-    ROCKBUTTON.style.backgroundColor = "grey";
-    PAPERBUTTON.style.backgroundColor = "grey";
-    SCISSORSBUTTON.style.backgroundColor = "grey";
+    //ROCKBUTTON.removeEventListener("click", chooseRock);
+    //PAPERBUTTON.removeEventListener("click", choosePaper);
+    //SCISSORSBUTTON.removeEventListener("click", chooseScissors);
+    //ROCKBUTTON.style.backgroundColor = "grey";
+    //PAPERBUTTON.style.backgroundColor = "grey";
+    //SCISSORSBUTTON.style.backgroundColor = "grey";
+    ROCKBUTTON.disabled = true;
+    PAPERBUTTON.disabled = true;
+    SCISSORSBUTTON.disabled = true;
 }
 
 // Gets items for animation - adds a class to the hands which holds the animation, which can then be removed on reset
@@ -176,12 +182,12 @@ function rivalChoose() {
 }
 
 function resetGame() {
-    document.getElementById("start-button").disabled = true;
     activateButtons();
     unAnimateHands();
     game.input = "";
     game.rivalInput = "";
     game.result = "";
+    document.getElementById("result-message").innerHTML = "Ro Sham Bo!";
     document.getElementById("lefthand").src = "images/fist.svg";
     document.getElementById("righthand").src = "images/fistRight.svg";
 }
